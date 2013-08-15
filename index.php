@@ -27,63 +27,6 @@
  *
  */
 
-
-$page_path = "";
-$cwd = getcwd();
-$site_root = substr(getcwd(), 0, strlen($cwd) - strlen($page_path));
-
-require_once($site_root . "/includes/head.php");
-
-$sql_interval = "whenquery > '{$today} 00:00:00' AND whenquery < '{$today} 23:59:59'";
-
-$sql_query = "SELECT whenquery AS start FROM " . MYSQL_TABLE . " WHERE {$sql_interval} AND PAC > 0 ORDER BY whenquery ASC LIMIT 0, 1";
-
-error_log($sql_query);
-
-if($sql_result = $sql_conn->query($sql_query)) {
-    if($sql_result->num_rows > 0) {
-        if($sql_data = $sql_result->fetch_array(MYSQLI_ASSOC)) {
-            $inv_start = $sql_data["start"];
-        }
-    }
-}
-
-$sql_query = "SELECT whenquery AS stop FROM " . MYSQL_TABLE . " WHERE {$sql_interval} AND PAC > 0 ORDER BY whenquery DESC LIMIT 0, 1";
-
-error_log($sql_query);
-
-if($sql_result = $sql_conn->query($sql_query)) {
-    if($sql_result->num_rows > 0) {
-        if($sql_data = $sql_result->fetch_array(MYSQLI_ASSOC)) {
-            $inv_stop = $sql_data["stop"];
-        }
-    }
-}
-
-$sql_query = "SELECT whenquery AS online FROM " . MYSQL_TABLE . " WHERE {$sql_interval} ORDER BY whenquery ASC LIMIT 0, 1";
-
-error_log($sql_query);
-
-if($sql_result = $sql_conn->query($sql_query)) {
-    if($sql_result->num_rows > 0) {
-        if($sql_data = $sql_result->fetch_array(MYSQLI_ASSOC)) {
-            $inv_online = $sql_data["online"];
-        }
-    }
-}
-
-$sql_query = "SELECT whenquery AS offline FROM " . MYSQL_TABLE . " WHERE {$sql_interval} ORDER BY whenquery DESC LIMIT 0, 1";
-
-error_log($sql_query);
-
-if($sql_result = $sql_conn->query($sql_query)) {
-    if($sql_result->num_rows > 0) {
-        if($sql_data = $sql_result->fetch_array(MYSQLI_ASSOC)) {
-            $inv_offline = $sql_data["offline"];
-        }
-    }
-}
-
 ?>
 <html>
 
@@ -91,14 +34,38 @@ if($sql_result = $sql_conn->query($sql_query)) {
         <title>SolarMax Inverters Stats</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" type="text/css" href="css/page.css" />
+        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="js/parser.js"></script>
     </head>
 
     <body>
         <div id="page">
-            <h1>Today activity</h1>
-            <h2>Start working at <?php echo strftime("%H:%M", strtotime($inv_start));; ?> and stop working at <?php echo strftime("%H:%M", strtotime($inv_stop)); ?><br />
-                Online from <?php echo strftime("%H:%M", strtotime($inv_online)); ?> to <?php echo strftime("%H:%M", strtotime($inv_offline)); ?></h2>
-            <p><img src="images.php" alt="Graph" title="Graph" /></p>
+            <div id="header">
+                <h1>Today activity</h1>
+                <h2>Start working at <span id="res_start"></span> and stop working at <span id="res_stop"></span><br />
+                    Online from <span id="res_online"></span> to <span id="res_offline"></span></h2>
+            </div>
+            <div id="live">
+                <div id="live_sx">
+                    <div>
+                        <div class="inv_label" id="inv_PAC_label">Current Power:</div>
+                        <div class="inv_value" id="inv_PAC_value"></div>
+                        <div class="inv_sep" id="inv_PAC_sep"></div>
+                        <div class="inv_bar" id="inv_PAC_bar"><div class="inv_bar_value" id="inv_PAC_bar_value"></div></div>
+                        <div class="inv_instrument floatreset"></div>
+                        <div class="inv_label" id="inv_TKK_label">Temperature:</div>
+                        <div class="inv_value" id="inv_TKK_value"></div>
+                        <div class="inv_sep" id="inv_TKK_sep"></div>
+                        <div class="inv_bar" id="inv_TKK_bar"><div class="inv_bar_value" id="inv_TKK_bar_value"></div></div>
+                        <div class="floatreset"></div>
+                    </div>
+                </div>
+                <div id="live_dx">DX</div>
+            </div>
+            <div class="ruler floatreset"></div>
+            <div id="content">
+                <img id="img_today" src="img/loading.png" alt="Graph" title="Graph" />
+            </div>
         </div>
     </body>
 
