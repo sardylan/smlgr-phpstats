@@ -66,6 +66,7 @@ if($action == "today") {
         $graph->SetMargin(60,30,60,70);
         $graph->SetFrame(true);
         $graph->title->Set("Today activity");
+        $graph->img->SetAntiAliasing(false);
 
         $graph->xaxis->SetTickSide(SIDE_BOTTOM);
         $graph->xaxis->SetLabelAngle(90);
