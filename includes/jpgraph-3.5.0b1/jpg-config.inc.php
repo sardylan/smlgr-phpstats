@@ -35,9 +35,9 @@
 //   MBTTF_DIR $SERVER_SYSTEMROOT/fonts/
 //
 //------------------------------------------------------------------------
-// define('CACHE_DIR','/tmp/jpgraph_cache/');
-// define('TTF_DIR','/usr/share/fonts/TrueType/');
-// define('MBTTF_DIR','/usr/share/fonts/TrueType/');
+define('CACHE_DIR','/tmp/jpgraph_cache/');
+define('TTF_DIR','/usr/share/fonts/TTF/');
+define('MBTTF_DIR','/usr/share/fonts/TTF/');
 
 //-------------------------------------------------------------------------
 // Cache directory specification for use with CSIM graphs that are

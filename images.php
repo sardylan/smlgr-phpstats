@@ -33,4 +33,50 @@ $site_root = substr(getcwd(), 0, strlen($cwd) - strlen($page_path));
 
 require_once($site_root . "/includes/head.php");
 
+require_once($site_root . "/includes/jpgraph-3.5.0b1/jpgraph.php");
+require_once($site_root . "/includes/jpgraph-3.5.0b1/jpgraph_line.php");
+require_once($site_root . "/includes/jpgraph-3.5.0b1/jpgraph_date.php");
+
+$sql_interval = "whenquery > '{$today} 00:00:00' AND whenquery < '{$today} 23:59:59' AND PAC > 0";
+
+$sql_query = "SELECT PAC, whenquery FROM " . MYSQL_TABLE . " WHERE {$sql_interval}";
+
+error_log($sql_query);
+
+$ydata = array();
+$xdata = array();
+
+if($sql_result = $sql_conn->query($sql_query)) {
+    if($sql_result->num_rows > 0) {
+        while($sql_data = $sql_result->fetch_array(MYSQLI_ASSOC)) {
+            array_push($ydata, $sql_data["PAC"]);
+            array_push($xdata, strtotime($sql_data["whenquery"]));
+        }
+    }
+}
+
+if(count($xdata) > 0) {
+    $graph = new Graph(1000,700);
+    $graph->SetScale("datlin");
+    $graph->SetTickDensity(TICKD_DENSE);
+
+    $graph->xaxis->SetTickSide(SIDE_BOTTOM);
+    $graph->xaxis->scale->ticks->SetSize(8, 3);
+    $graph->xaxis->scale->ticks->SetWeight(2);
+    $graph->xaxis->scale->ticks->Set(20*60, 60);
+    $graph->xaxis->scale->ticks->SupressMinorTickMarks(false);
+    $graph->xaxis->scale->ticks->SupressTickMarks(false);
+    $graph->xaxis->SetLabelAngle(90);
+
+    $graph->yaxis->SetTickSide(SIDE_LEFT);
+
+    $lineplot = new LinePlot($ydata, $xdata);
+    $lineplot->SetColor("blue");
+    $lineplot->SetFillColor("lightblue"); 
+
+    $graph->Add($lineplot);
+
+    $graph->Stroke();
+}
+
 ?>
