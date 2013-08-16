@@ -41,7 +41,6 @@ if($sql_conn->connect_error)
     die("Connect Error (" . $mysqli->connect_errno . "): " . $mysqli->connect_error);
 
 $now = time();
-// $today = date("Y-m-d", $now);
-$today = "2013-08-15"
+$today = date("Y-m-d", $now);
 
 ?>

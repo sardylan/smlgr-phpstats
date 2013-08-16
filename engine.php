@@ -70,6 +70,14 @@ if($action == "refresh") {
             if($sql_data = $sql_result->fetch_array(MYSQLI_ASSOC))
                 $ret["res_offline"] = strftime("%H:%M", strtotime($sql_data["offline"]));
 
+    $sql_query = "SELECT whenquery, PAC FROM " . MYSQL_TABLE . " WHERE {$sql_interval} ORDER BY PAC DESC LIMIT 0, 1";
+
+    if($sql_result = $sql_conn->query($sql_query))
+        if($sql_result->num_rows > 0)
+            if($sql_data = $sql_result->fetch_array(MYSQLI_ASSOC))
+                $ret["max_how"] = $sql_data["PAC"] / 2;
+                $ret["max_when"] = strftime("%H:%M", strtotime($sql_data["whenquery"]));
+
     $sql_query = "SELECT PAC, TKK FROM " . MYSQL_TABLE . " ORDER BY whenquery DESC LIMIT 0, 1";
 
     if($sql_result = $sql_conn->query($sql_query))
