@@ -60,7 +60,9 @@
                         <div class="floatreset"></div>
                     </div>
                 </div>
-                <div id="live_dx">DX</div>
+                <div id="live_dx">
+                    Max production: <span id="max_how"></span> at <span id="max_when"></span>
+                </div>
             </div>
             <div class="ruler floatreset"></div>
             <div id="content">

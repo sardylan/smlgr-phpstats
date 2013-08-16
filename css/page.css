@@ -128,3 +128,11 @@ div.inv_bar_value {
 div.inv_instrument {
     height: 5px;
 }
+
+span#max_how {
+    font-weight: bold;
+}
+
+span#max_when {
+    font-weight: bold;
+}
