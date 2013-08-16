@@ -42,5 +42,6 @@ if($sql_conn->connect_error)
 
 $now = time();
 $today = date("Y-m-d", $now);
+$yesterday = date("Y-m-d", $now - (24*60*60));
 
 ?>

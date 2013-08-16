@@ -61,12 +61,14 @@
                     </div>
                 </div>
                 <div id="live_dx">
-                    Max production: <span id="max_how"></span> at <span id="max_when"></span>
+                    Max production today: <span id="today_max_how"></span> at <span id="today_max_when"></span><br />
+                    Max production yesterday: <span id="yesterday_max_how"></span> at <span id="yesterday_max_when"></span>
                 </div>
             </div>
             <div class="ruler floatreset"></div>
             <div id="content">
-                <img id="img_today" src="img/loading.png" alt="Graph" title="Graph" />
+                <img id="img_today" src="img/loading.png" alt="Today" title="Today" /><br />
+                <img id="img_yesterday" src="img/loading.png" alt="Yesterday" title="Yesterday" />
             </div>
         </div>
     </body>

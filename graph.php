@@ -105,4 +105,96 @@ if($action == "today") {
     }
 }
 
+if($action == "yesterday") {
+    $sql_interval = "whenquery > '{$yesterday} 00:00:00' AND whenquery < '{$yesterday} 23:59:59' AND PAC > 0";
+
+    $sql_query = "SELECT PAC, whenquery FROM " . MYSQL_TABLE . " WHERE {$sql_interval}";
+
+    error_log($sql_query);
+
+    $ydata = array();
+    $xdata = array();
+
+    if($sql_result = $sql_conn->query($sql_query)) {
+        if($sql_result->num_rows > 0) {
+            while($sql_data = $sql_result->fetch_array(MYSQLI_ASSOC)) {
+                array_push($ydata, $sql_data["PAC"]/2);
+                array_push($xdata, strtotime($sql_data["whenquery"]));
+            }
+        }
+    }
+
+    if(count($xdata) > 0) {
+        $graph = new Graph(1000,500);
+        $graph->SetScale("datlin");
+        $graph->SetTickDensity(TICKD_DENSE);
+        $graph->SetMargin(60,30,60,70);
+        $graph->SetFrame(true);
+        $graph->title->Set("Yesterday activity");
+
+        $graph->xaxis->SetTickSide(SIDE_BOTTOM);
+        $graph->xaxis->SetLabelAngle(90);
+        $graph->xaxis->scale->ticks->SetSize(8, 3);
+        $graph->xaxis->scale->ticks->SupressMinorTickMarks(false);
+        $graph->xaxis->scale->ticks->SupressTickMarks(false);
+        $graph->xaxis->scale->SetTimeAlign(HOURADJ_1);
+
+        if(count($xdata) < 6)
+            $graph->xaxis->scale->ticks->Set(10, 1);
+        elseif(count($xdata) < 60)
+            $graph->xaxis->scale->ticks->Set(60, 10);
+        elseif(count($xdata) < 300)
+            $graph->xaxis->scale->ticks->Set(10*60, 60);
+        elseif(count($xdata) < 600)
+            $graph->xaxis->scale->ticks->Set(20*60, 2*60);
+        elseif(count($xdata) < 900)
+            $graph->xaxis->scale->ticks->Set(30*60, 5*60);
+        elseif(count($xdata) < 2000)
+            $graph->xaxis->scale->ticks->Set(60*60, 15*60);
+        elseif(count($xdata) < 3000)
+            $graph->xaxis->scale->ticks->Set(2*60*60, 15*60);
+        else
+            $graph->xaxis->scale->ticks->Set(3*60*60, 20*60);
+
+        $graph->yaxis->SetTickSide(SIDE_LEFT);
+
+        $lineplot = new LinePlot($ydata, $xdata);
+        $lineplot->SetColor("blue");
+        $lineplot->SetFillColor("lightblue"); 
+
+        $graph->Add($lineplot);
+
+        header("Content-type: image/png");
+        header("Cache-Control: no-cache, must-revalidate");
+        $graph->Stroke();
+    }
+}
+
+if($action == "test") {
+    for($i=0; $i<=20; $i++) {
+        $datay[$i] = $i * 5;;
+        $datay2[$i] = rand(1, 50);
+    }
+
+    $graph = new Graph(1000, 500);
+
+    $graph->SetTickDensity(TICKD_DENSE);
+    $graph->SetMargin(60, 30, 60, 70);
+    $graph->SetFrame(true);
+
+    $graph->title->Set("Today activity");
+
+    $graph->SetScale("datint");
+    $graph->SetY2Scale("int");
+
+    $p1 = new LinePlot($datay);
+    $graph->Add($p1);
+
+    $p2 = new LinePlot($datay2);
+    $p2->SetColor('teal');
+    $graph->AddY2($p2);
+
+    $graph->Stroke();
+}
+
 ?>
