@@ -34,7 +34,28 @@ function updatePage() {
         success: function(response) {
             $("#content").show();
             $("#img_today").attr("src", "graph.php?action=today&temp=" + Math.random() * 1000);
-//             $("#img_yesterday").attr("src", "graph.php?action=yesterday&temp=" + Math.random() * 1000);
+            $("#res_start").html(response.res_start);
+            $("#res_stop").html(response.res_stop);
+            $("#res_online").html(response.res_online);
+            $("#res_offline").html(response.res_offline);
+            $("#today_max_how").html(response.today_max_how + " W");
+            $("#today_max_when").html(response.today_max_when);
+            $("#inv_PAC_value").html(response.inv_PAC + " W");
+            $("#inv_TKK_value").html(response.inv_TKK + "° C");
+            $("#inv_PAC_bar_value").width(($("#inv_PAC_bar").width() / 2750) * response.inv_PAC);
+            $("#inv_TKK_bar_value").width(($("#inv_TKK_bar").width() / 80) * response.inv_TKK);
+        }
+    });
+}
+
+function firstLoadPage() {
+    $.ajax({
+        type: "GET",
+        url: "engine.php",
+        data: "action=first",
+        success: function(response) {
+            $("#content").show();
+            $("#img_today").attr("src", "graph.php?action=today&temp=" + Math.random() * 1000);
             $("#res_start").html(response.res_start);
             $("#res_stop").html(response.res_stop);
             $("#res_online").html(response.res_online);
@@ -52,6 +73,6 @@ function updatePage() {
 }
 
 $(document).ready(function() {
-    updatePage();
+    firstLoadPage();
     setInterval(updatePage, 10000);
 });

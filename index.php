@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div id="live_dx">
-                    Max production today: <span id="today_max_how"></span> at <span id="today_max_when"></span><br />
+                    Max power today: <span id="today_max_how"></span> at <span id="today_max_when"></span><br />
                     Max production yesterday: <span id="yesterday_max_how"></span> at <span id="yesterday_max_when"></span>
                 </div>
             </div>
