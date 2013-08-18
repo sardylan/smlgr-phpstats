@@ -125,6 +125,10 @@ if($action == "first") {
             if($sql_data = $sql_result->fetch_array(MYSQLI_ASSOC))
                 $ret["yesterday_prod"] = number_format($sql_data["KLD"] / 10, 1);
 
+    $kwh_last_whenquery = 0;
+    $kwh_last_PAC = 0;
+    $kwh_sum = 0;
+
     $sql_query = "SELECT whenquery, PAC FROM " . MYSQL_TABLE . " WHERE {$sql_interval_yesterday} AND PAC > 0;";
 
     if($sql_result = $sql_conn->query($sql_query))
