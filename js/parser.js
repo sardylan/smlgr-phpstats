@@ -57,6 +57,17 @@ function updatePage() {
     });
 }
 
+function updateProd() {
+    $.ajax({
+        type: "GET",
+        url: "engine.php",
+        data: "action=prod",
+        success: function(response) {
+            $("#today_prod").html(response.today_prod);
+        }
+    });
+}
+
 function firstLoadPage() {
     $.ajax({
         type: "GET",
@@ -73,5 +84,7 @@ function firstLoadPage() {
 $(document).ready(function() {
     firstLoadPage();
     updatePage();
-    setInterval(updatePage, 10000);
+    updateProd();
+    setInterval(updatePage, 1000 * (10));
+    setInterval(updatePage, 1000 * (60*5));
 });
