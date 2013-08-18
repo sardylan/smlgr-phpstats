@@ -45,8 +45,6 @@ if($action == "today") {
 
     $sql_query = "SELECT PAC, whenquery FROM " . MYSQL_TABLE . " WHERE {$sql_interval}";
 
-    error_log($sql_query);
-
     $ydata = array();
     $xdata = array();
 

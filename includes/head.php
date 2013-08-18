@@ -35,6 +35,8 @@ define("MYSQL_DB", "smlgr");
 
 define("MYSQL_TABLE", "invdata");
 
+date_default_timezone_set("Europe/Rome");
+
 $sql_conn = new mysqli(MYSQL_SERVER, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB);
 
 if($sql_conn->connect_error)

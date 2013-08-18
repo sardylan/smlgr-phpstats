@@ -38,12 +38,21 @@ function updatePage() {
             $("#res_stop").html(response.res_stop);
             $("#res_online").html(response.res_online);
             $("#res_offline").html(response.res_offline);
-            $("#today_max_how").html(response.today_max_how + " W");
+            $("#today_max_how").html(response.today_max_how);
             $("#today_max_when").html(response.today_max_when);
-            $("#inv_PAC_value").html(response.inv_PAC + " W");
-            $("#inv_TKK_value").html(response.inv_TKK + "° C");
-            $("#inv_PAC_bar_value").width(($("#inv_PAC_bar").width() / 2750) * response.inv_PAC);
-            $("#inv_TKK_bar_value").width(($("#inv_TKK_bar").width() / 80) * response.inv_TKK);
+            $("#today_prod").html(response.today_prod);
+
+            if(response.isonline == 1) {
+                $("#inv_PAC_value").html(response.inv_PAC + " W");
+                $("#inv_TKK_value").html(response.inv_TKK + " °C");
+                $("#inv_PAC_bar_value").width(($("#inv_PAC_bar").width() / 2750) * response.inv_PAC);
+                $("#inv_TKK_bar_value").width(($("#inv_TKK_bar").width() / 80) * response.inv_TKK);
+            } else {
+                $("#inv_PAC_value").html("OFFLINE");
+                $("#inv_TKK_value").html("OFFLINE");
+                $("#inv_PAC_bar_value").width(0);
+                $("#inv_TKK_bar_value").width(0);
+            }
         }
     });
 }
@@ -54,25 +63,15 @@ function firstLoadPage() {
         url: "engine.php",
         data: "action=first",
         success: function(response) {
-            $("#content").show();
-            $("#img_today").attr("src", "graph.php?action=today&temp=" + Math.random() * 1000);
-            $("#res_start").html(response.res_start);
-            $("#res_stop").html(response.res_stop);
-            $("#res_online").html(response.res_online);
-            $("#res_offline").html(response.res_offline);
-            $("#today_max_how").html(response.today_max_how + " W");
-            $("#today_max_when").html(response.today_max_when);
-            $("#yesterday_max_how").html(response.yesterday_max_how + " W");
+            $("#yesterday_max_how").html(response.yesterday_max_how);
             $("#yesterday_max_when").html(response.yesterday_max_when);
-            $("#inv_PAC_value").html(response.inv_PAC + " W");
-            $("#inv_TKK_value").html(response.inv_TKK + "° C");
-            $("#inv_PAC_bar_value").width(($("#inv_PAC_bar").width() / 2750) * response.inv_PAC);
-            $("#inv_TKK_bar_value").width(($("#inv_TKK_bar").width() / 80) * response.inv_TKK);
+            $("#yesterday_prod").html(response.yesterday_prod);
         }
     });
 }
 
 $(document).ready(function() {
     firstLoadPage();
+    updatePage();
     setInterval(updatePage, 10000);
 });

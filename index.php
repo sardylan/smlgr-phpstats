@@ -47,22 +47,22 @@
             </div>
             <div id="live">
                 <div id="live_sx">
-                    <div>
+                    <div id="live_container">
                         <div class="inv_label" id="inv_PAC_label">Current Power:</div>
-                        <div class="inv_value" id="inv_PAC_value"></div>
+                        <div class="inv_value"><span id="inv_PAC_value"></span></div>
                         <div class="inv_sep" id="inv_PAC_sep"></div>
                         <div class="inv_bar" id="inv_PAC_bar"><div class="inv_bar_value" id="inv_PAC_bar_value"></div></div>
                         <div class="inv_instrument floatreset"></div>
                         <div class="inv_label" id="inv_TKK_label">Temperature:</div>
-                        <div class="inv_value" id="inv_TKK_value"></div>
+                        <div class="inv_value"><span id="inv_TKK_value"></span></div>
                         <div class="inv_sep" id="inv_TKK_sep"></div>
                         <div class="inv_bar" id="inv_TKK_bar"><div class="inv_bar_value" id="inv_TKK_bar_value"></div></div>
                         <div class="floatreset"></div>
                     </div>
                 </div>
                 <div id="live_dx">
-                    Max power today: <span id="today_max_how"></span> at <span id="today_max_when"></span><br />
-                    Max production yesterday: <span id="yesterday_max_how"></span> at <span id="yesterday_max_when"></span>
+                    <strong>Today:</strong> <span id="today_prod"></span> kWh (max <span id="today_max_how"></span> W at <span id="today_max_when"></span>)<br />
+                    <strong>Yesterday:</strong> <span id="yesterday_prod"></span> kWh (max <span id="yesterday_max_how"></span> W at <span id="yesterday_max_when"></span>)
                 </div>
             </div>
             <div class="ruler floatreset"></div>
