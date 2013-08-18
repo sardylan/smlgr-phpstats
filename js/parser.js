@@ -40,7 +40,6 @@ function updatePage() {
             $("#res_offline").html(response.res_offline);
             $("#today_max_how").html(response.today_max_how);
             $("#today_max_when").html(response.today_max_when);
-            $("#today_prod").html(response.today_prod);
 
             if(response.isonline == 1) {
                 $("#inv_PAC_value").html(response.inv_PAC + " W");
