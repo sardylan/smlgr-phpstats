@@ -60,7 +60,7 @@ div#live {
 
 div#live_sx {
     height: 65px;
-    width: 500px;
+    width: 600px;
     float: left;
     border-width: 0px;
     margin-top: 5px;
@@ -70,7 +70,6 @@ div#live_sx {
 
 div#live_dx {
     height: 65px;
-    width: 50%;
     float: right;
     border-width: 0px;
     margin-top: 5px;
@@ -86,7 +85,7 @@ div.inv_label {
     float: left;
     height: 30px;
     line-height: 30px;
-    width: 120px;
+    width: 150px;
 }
 
 div.inv_value {
@@ -94,7 +93,7 @@ div.inv_value {
     text-align: center;
     height: 26px;
     line-height: 26px;
-    width: 60px;
+    width: 100px;
     border-color: black;
     border-style: solid;
     border-width: 2px;

@@ -68,7 +68,6 @@
             <div class="ruler floatreset"></div>
             <div id="content">
                 <img id="img_today" src="img/loading.png" alt="Today" title="Today" /><br />
-                <img id="img_yesterday" src="img/loading.png" alt="Yesterday" title="Yesterday" />
             </div>
         </div>
     </body>

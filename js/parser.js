@@ -34,7 +34,7 @@ function updatePage() {
         success: function(response) {
             $("#content").show();
             $("#img_today").attr("src", "graph.php?action=today&temp=" + Math.random() * 1000);
-            $("#img_yesterday").attr("src", "graph.php?action=yesterday&temp=" + Math.random() * 1000);
+//             $("#img_yesterday").attr("src", "graph.php?action=yesterday&temp=" + Math.random() * 1000);
             $("#res_start").html(response.res_start);
             $("#res_stop").html(response.res_stop);
             $("#res_online").html(response.res_online);
