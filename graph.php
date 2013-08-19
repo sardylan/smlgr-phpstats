@@ -39,6 +39,14 @@ require_once($site_root . "/includes/jpgraph-3.5.0b1/jpgraph_line.php");
 require_once($site_root . "/includes/jpgraph-3.5.0b1/jpgraph_date.php");
 
 $action = my_get("action");
+$img_x = my_get("x");
+$img_y = my_get("y");
+
+if($img_x < 200)
+    $img_x = 200;
+
+if($img_y < 50)
+    $img_y = 50;
 
 if($action == "today") {
     $sql_interval = "whenquery > '{$today} 00:00:00' AND whenquery < '{$today} 23:59:59' AND PAC > 0";
@@ -58,7 +66,7 @@ if($action == "today") {
     }
 
     if(count($xdata) > 0) {
-        $graph = new Graph(1000,500);
+        $graph = new Graph($img_x, $img_y);
         $graph->SetScale("datlin");
         $graph->SetTickDensity(TICKD_DENSE);
         $graph->SetMargin(60,30,60,70);
@@ -123,7 +131,7 @@ if($action == "yesterday") {
     }
 
     if(count($xdata) > 0) {
-        $graph = new Graph(1000,500);
+        $graph = new Graph($img_x, $img_y);
         $graph->SetScale("datlin");
         $graph->SetTickDensity(TICKD_DENSE);
         $graph->SetMargin(60,30,60,70);
@@ -174,7 +182,7 @@ if($action == "test") {
         $datay2[$i] = rand(1, 50);
     }
 
-    $graph = new Graph(1000, 500);
+    $graph = new Graph($img_x, $img_y);
 
     $graph->SetTickDensity(TICKD_DENSE);
     $graph->SetMargin(60, 30, 60, 70);

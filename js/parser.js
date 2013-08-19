@@ -33,7 +33,7 @@ function updatePage() {
         data: "action=refresh",
         success: function(response) {
             $("#content").show();
-            $("#img_today").attr("src", "graph.php?action=today&temp=" + Math.random() * 1000);
+            $("#img_today").attr("src", "graph.php?action=today&x=" + ($(document).width() - 200) + "&y=" + ($(document).height() - 300) + "&temp=" + Math.random() * 1000);
             $("#res_start").html(response.res_start);
             $("#res_stop").html(response.res_stop);
             $("#res_online").html(response.res_online);

@@ -37,7 +37,7 @@ define("MYSQL_TABLE", "invdata");
 
 date_default_timezone_set("Europe/Rome");
 
-$sql_conn = new mysqli(MYSQL_SERVER, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB);
+$sql_conn = new mysqli(MYSQL_SERVER, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB, MYSQL_PORT);
 
 if($sql_conn->connect_error)
     die("Connect Error (" . $mysqli->connect_errno . "): " . $mysqli->connect_error);
