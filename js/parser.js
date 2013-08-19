@@ -40,6 +40,7 @@ function updatePage() {
             $("#res_offline").html(response.res_offline);
             $("#today_max_how").html(response.today_max_how);
             $("#today_max_when").html(response.today_max_when);
+            $("#today_prod").html(response.today_prod);
 
             if(response.isonline == 1) {
                 $("#inv_PAC_value").html(response.inv_PAC + " W");
@@ -52,17 +53,6 @@ function updatePage() {
                 $("#inv_PAC_bar_value").width(0);
                 $("#inv_TKK_bar_value").width(0);
             }
-        }
-    });
-}
-
-function updateProd() {
-    $.ajax({
-        type: "GET",
-        url: "engine.php",
-        data: "action=prod",
-        success: function(response) {
-            $("#today_prod").html(response.today_prod);
         }
     });
 }
@@ -83,7 +73,5 @@ function firstLoadPage() {
 $(document).ready(function() {
     firstLoadPage();
     updatePage();
-    updateProd();
     setInterval(updatePage, 1000 * (10));
-    setInterval(updatePage, 1000 * (60*5));
 });

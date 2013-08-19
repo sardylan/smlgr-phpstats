@@ -125,32 +125,32 @@ if($action == "first") {
             if($sql_data = $sql_result->fetch_array(MYSQLI_ASSOC))
                 $ret["yesterday_prod"] = number_format($sql_data["KLD"] / 10, 1);
 
-    $kwh_last_whenquery = 0;
-    $kwh_last_PAC = 0;
-    $kwh_sum = 0;
-
-    $sql_query = "SELECT whenquery, PAC FROM " . MYSQL_TABLE . " WHERE {$sql_interval_yesterday} AND PAC > 0;";
-
-    if($sql_result = $sql_conn->query($sql_query))
-        if($sql_result->num_rows > 0) {
-            while($sql_data = $sql_result->fetch_array(MYSQLI_ASSOC)) {
-                if($kwh_last_whenquery != 0) {
-                    $kwh_new_whenquery = strtotime($sql_data["whenquery"]);
-
-                    $kwh_duration = $kwh_new_whenquery - $kwh_last_whenquery;
-                    $kwh_sum += $kwh_last_PAC * $kwh_duration;
-                }
-
-                $kwh_last_whenquery = strtotime($sql_data["whenquery"]);
-                $kwh_last_PAC = $sql_data["PAC"] / 2;
-            }
-
-            $kwh_sum += $kwh_last_PAC * 10; // 10 seconds medium query time
-
-            $kwh_prod = ($kwh_sum / 3600) / 1000;
-
-            $ret["yesterday_prod"] = number_format($kwh_prod, 1);
-        }
+//     $kwh_last_whenquery = 0;
+//     $kwh_last_PAC = 0;
+//     $kwh_sum = 0;
+// 
+//     $sql_query = "SELECT whenquery, PAC FROM " . MYSQL_TABLE . " WHERE {$sql_interval_yesterday} AND PAC > 0;";
+// 
+//     if($sql_result = $sql_conn->query($sql_query))
+//         if($sql_result->num_rows > 0) {
+//             while($sql_data = $sql_result->fetch_array(MYSQLI_ASSOC)) {
+//                 if($kwh_last_whenquery != 0) {
+//                     $kwh_new_whenquery = strtotime($sql_data["whenquery"]);
+// 
+//                     $kwh_duration = $kwh_new_whenquery - $kwh_last_whenquery;
+//                     $kwh_sum += $kwh_last_PAC * $kwh_duration;
+//                 }
+// 
+//                 $kwh_last_whenquery = strtotime($sql_data["whenquery"]);
+//                 $kwh_last_PAC = $sql_data["PAC"] / 2;
+//             }
+// 
+//             $kwh_sum += $kwh_last_PAC * 10; // 10 seconds medium query time
+// 
+//             $kwh_prod = ($kwh_sum / 3600) / 1000;
+// 
+//             $ret["yesterday_prod"] = number_format($kwh_prod, 1);
+//         }
 
     header("Content-type: application/json");
     header("Cache-Control: no-cache, must-revalidate");
@@ -163,32 +163,32 @@ if($action == "prod") {
 
     $sql_interval = "whenquery > '{$today} 00:00:00' AND whenquery < '{$today} 23:59:59'";
 
-    $kwh_last_whenquery = 0;
-    $kwh_last_PAC = 0;
-    $kwh_sum = 0;
-
-    $sql_query = "SELECT whenquery, PAC FROM " . MYSQL_TABLE . " WHERE {$sql_interval} AND PAC > 0;";
-
-    if($sql_result = $sql_conn->query($sql_query))
-        if($sql_result->num_rows > 0) {
-            while($sql_data = $sql_result->fetch_array(MYSQLI_ASSOC)) {
-                if($kwh_last_whenquery != 0) {
-                    $kwh_new_whenquery = strtotime($sql_data["whenquery"]);
-
-                    $kwh_duration = $kwh_new_whenquery - $kwh_last_whenquery;
-                    $kwh_sum += $kwh_last_PAC * $kwh_duration;
-                }
-
-                $kwh_last_whenquery = strtotime($sql_data["whenquery"]);
-                $kwh_last_PAC = $sql_data["PAC"] / 2;
-            }
-
-            $kwh_sum += $kwh_last_PAC * 10; // 10 seconds medium query time
-
-            $kwh_prod = ($kwh_sum / 3600) / 1000;
-
-            $ret["today_prod"] = number_format($kwh_prod, 1);
-        }
+//     $kwh_last_whenquery = 0;
+//     $kwh_last_PAC = 0;
+//     $kwh_sum = 0;
+// 
+//     $sql_query = "SELECT whenquery, PAC FROM " . MYSQL_TABLE . " WHERE {$sql_interval} AND PAC > 0;";
+// 
+//     if($sql_result = $sql_conn->query($sql_query))
+//         if($sql_result->num_rows > 0) {
+//             while($sql_data = $sql_result->fetch_array(MYSQLI_ASSOC)) {
+//                 if($kwh_last_whenquery != 0) {
+//                     $kwh_new_whenquery = strtotime($sql_data["whenquery"]);
+// 
+//                     $kwh_duration = $kwh_new_whenquery - $kwh_last_whenquery;
+//                     $kwh_sum += $kwh_last_PAC * $kwh_duration;
+//                 }
+// 
+//                 $kwh_last_whenquery = strtotime($sql_data["whenquery"]);
+//                 $kwh_last_PAC = $sql_data["PAC"] / 2;
+//             }
+// 
+//             $kwh_sum += $kwh_last_PAC * 10; // 10 seconds medium query time
+// 
+//             $kwh_prod = ($kwh_sum / 3600) / 1000;
+// 
+//             $ret["today_prod"] = number_format($kwh_prod, 1);
+//         }
 
     header("Content-type: application/json");
     header("Cache-Control: no-cache, must-revalidate");
